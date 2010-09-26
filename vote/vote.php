@@ -2,10 +2,11 @@
 	<head>
 		<title>PPAU Voting system</title>
 		<style>
-			body, select { font-size:14px; }
-			form { margin:5px; }
-			p { color:red; margin:5px; }
-			b { color:blue; }
+			body, select { font-size: 14px; }
+			form { margin: 5px; }
+			p { color: red; margin: 5px; }
+			b { color: blue; }
+			h3 { line-height: 18px; }
 		</style>
 		<script type="text/javascript" src="/Clipperz/src/js/MochiKit/MochiKit.js"></script>
 		
@@ -108,7 +109,7 @@
 				echo '<h3>'.$question['question'].'</h3>';
 				if( !empty( $question['info'] ) )
 				{
-					echo $a[1].'<br />';
+					echo $question['info'] . '<br />';
 				}
 				
 				switch( $question['type'] )
@@ -138,9 +139,11 @@ HTML;
 		<table>
 			<tr style="background:#FFF"><td></td>
 				<td>
-					<b>Warning: Once this form has been submitted, it can not be changed</b>
 					<div style="height: 10px;"></div>
+					<p>Warning: Once this form has been submitted, it can not be changed</p>
+					<div style="height: 5px;"></div>
 					<input type="button" id="submit" name="myButton" value="Submit" onclick="" />
+					<div style="height: 5px;"></div>
 					<div id="noentropy">You need to generate more entropy by moving your mouse around the screen before you can submit</div>
 				</td>
 			</tr>
