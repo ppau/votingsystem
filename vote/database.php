@@ -13,6 +13,8 @@
 			'password' => 'hvfdq2',
 			'database' => 'ppau_database',
 		),
+		'salt_start' => 'J1#ueNl~Bw08^A',
+		'salt_end' => ']K9jwg$jsI3Q',
 	);
 	
 	function get_config()
@@ -80,7 +82,7 @@
 			$election
 		);
 
-		$result = $db->GetRow( $sql );
+		$result = $db->GetOne( $sql );
 		return !empty( $result );
 	}
 	
