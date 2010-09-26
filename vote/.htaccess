@@ -1,5 +1,7 @@
-RewriteEngine On
+RewriteEngine on
 
-RewriteRule ^/vote/([0-9]+)/$ /vote.php?id=$1 [NC]
-RewriteRule ^/admin/([^/]+)/([^/]+)/$ /admin/index.php?_section=$1&_param=$2 [NC,L]
-RewriteRule ^/admin/([^/]+)/$ /admin/index.php?_section=$1 [NC]
+RewriteBase /
+
+RewriteRule ^vote/([0-9]+)/$ vote.php?id=$1 [NC]
+RewriteRule ^admin/([^/]+)/([^/]+)/$ admin/index.php?_section=$1&_param=$2 [NC,L]
+RewriteRule ^admin/([^/]+)/$ admin/index.php?_section=$1 [NC]
