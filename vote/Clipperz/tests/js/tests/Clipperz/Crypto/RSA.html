@@ -1,0 +1,60 @@
+<html>
+<head>
+	<script type="text/javascript" src="../../../../../src/js/MochiKit/MochiKit.js"></script>
+    <script type="text/javascript" src="../../../SimpleTest/SimpleTest.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../SimpleTest/test.css">
+
+	<script type='text/javascript' src='../../../../../src/js/Clipperz/Base.js'></script>
+
+	<script type='text/javascript' src='../../../../../src/js/Clipperz/Crypto/BigInt.js'></script>
+	<script type='text/javascript' src='../../../../../src/js/Clipperz/Crypto/Base.js'></script>
+	<script type='text/javascript' src='../../../../../src/js/Clipperz/Crypto/RSA.js'></script>
+
+</head>
+<body>
+<pre id="test">
+<script type="text/javascript">
+try {
+	var	rsaPublicKey;
+	var	randomValue;
+	var	publicEncryptedValue;
+	var privateEncryptedValue;
+
+	var	startTime;
+	var	endTime;
+
+
+startTime=new Date();
+	rsaPublicKey = Clipperz.Crypto.RSA.generatePublicKey(512);
+
+endTime=new Date();
+is(true, true, 'Time to generate the RSA public key (size 512 bit): '+(endTime.getTime()-startTime.getTime())/1000.0);
+
+	randomValue = Clipperz.Crypto.Base.generateRandomSeed();
+	publicEncryptedValue = Clipperz.Crypto.RSA.encryptUsingPublicKey(rsaPublicKey, randomValue);
+	privateEncryptedValue = Clipperz.Crypto.RSA.encryptUsingPrivateKey(rsaPublicKey, randomValue);
+	
+	is(publicEncryptedValue == privateEncryptedValue, false);
+	is(Clipperz.Crypto.RSA.decryptUsingPrivateKey(rsaPublicKey, publicEncryptedValue), randomValue);
+	is(Clipperz.Crypto.RSA.decryptUsingPublicKey(rsaPublicKey, privateEncryptedValue), randomValue);
+
+	//-------------------------------------------------------------------------
+} catch (err) {
+    
+    var s = "test suite failure!\n";
+    var o = {};
+    var k = null;
+    for (k in err) {
+        // ensure unique keys?!
+        if (!o[k]) {
+            s +=  k + ": " + err[k] + "\n";
+            o[k] = err[k];
+        }
+    }
+    ok ( false, s );
+}
+
+</script>
+</pre>
+</body>
+</html>
