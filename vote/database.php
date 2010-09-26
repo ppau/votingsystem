@@ -35,7 +35,7 @@
 		$conf = get_config();
 		
 		$__db = ADONewConnection( $conf['db']['driver'] ); # eg 'mysql' or 'postgres'
-		$__db->debug = false;
+		$__db->debug = true;
 		$__db->Connect( $conf['db']['server'], $conf['db']['username'], $conf['db']['password'], $conf['db']['database'] );
 		$__db->SetFetchMode( ADODB_FETCH_ASSOC );
 		

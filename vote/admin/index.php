@@ -10,7 +10,7 @@
 		{
 			$sql = sprintf( '
 				SELECT
-					*
+					username, password
 				FROM
 					form_vote_admins
 				WHERE
