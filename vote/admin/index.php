@@ -28,7 +28,8 @@
 				$input_pass = sha1( $conf['salt_start'] . $_SERVER['PHP_AUTH_PW'] . $conf['salt_end'] );
 				if( strcmp( $input_pass, $user['password'] ) === 0 )
 				{
-					$_SESSION['vote_admin_auth'] = true;
+					session_name( $user['username'] );
+					$_SESSION['vote_admin_auth'] = md5( $user['username'] );
 					return true;
 				}
 			}
@@ -41,4 +42,9 @@
 	
 	session_start();
 	
-	passwordProtect();
+	if( !isset( $_SESSION['vote_admin_auth'] ) || strcmp( $_SESSION['vote_admin_auth'], md5( session_name() ) ) !== 0 )
+	{
+		passwordProtect();
+	}
+	
+	echo 'Welcome.';
