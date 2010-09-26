@@ -35,7 +35,7 @@
 		$conf = get_config();
 		
 		$__db = ADONewConnection( $conf['db']['driver'] ); # eg 'mysql' or 'postgres'
-		$__db->debug = true;
+		$__db->debug = false;
 		$__db->Connect( $conf['db']['server'], $conf['db']['username'], $conf['db']['password'], $conf['db']['database'] );
 		$__db->SetFetchMode( ADODB_FETCH_ASSOC );
 		
@@ -82,7 +82,7 @@
 			$election
 		);
 
-		$result = $db->GetOne( $sql );
+		$result = $db->GetRow( $sql );
 		return !empty( $result );
 	}
 	
@@ -95,10 +95,49 @@
 				*
 			FROM
 				`registrations`
+			ORDER BY
+				surname, firstname
 			'
 		);
 		
 		return $db->GetAll( $sql );
+	}
+	
+	function get_elections()
+	{
+		$db = get_db();
+	
+		$sql = sprintf( '
+			SELECT
+				*
+			FROM
+				`form_vote`
+			ORDER BY
+				start DESC
+			'
+		);
+		
+		return $db->GetAll( $sql );
+	}
+	
+	function get_elections_by_id( $id )
+	{
+		$db = get_db();
+	
+		$sql = sprintf( '
+			SELECT
+				*
+			FROM
+				`form_vote`
+			WHERE
+				id = %d
+			LIMIT
+				1
+			',
+			$id
+		);
+		
+		return $db->GetRow( $sql );
 	}
 	
 	function add_pub_key( $publicKey )
@@ -132,7 +171,7 @@
 			$voter->y->asString( 16 )
 		);
 		
-		$result = $db->GetOne( $sql );
+		$result = $db->GetRow( $sql );
 		
 		return $result != false;
 	}
@@ -158,7 +197,7 @@
 			$voter->y->asString( 16 )
 		);
 
-		$result = $db->GetOne();
+		$result = $db->GetRow();
 		
 		return $result != false;
 	}
@@ -181,7 +220,7 @@
 			$Rcap->y->asString( 16 )
 		);
 		
-		$result = $db->GetOne( $sql );
+		$result = $db->GetRow( $sql );
 		
 		return $result != false;
 	}
@@ -205,7 +244,7 @@
 			$Rcap->y->asString( 16 )
 		);
 		
-		$result = $db->GetOne( $sql );
+		$result = $db->GetRow( $sql );
 		
 		return ( $result != false ) && ( !empty( $result['bsig'] ) );
 	}
@@ -231,7 +270,7 @@
 			$voter->y->asString( 16 )
 		);
 		
-		$result = $db->GetOne();
+		$result = $db->GetRow();
 		
 		return new elipticCurveValue( $group, $result['pubRX'], $result['pubRY'] , 16 );
 	}
@@ -254,7 +293,7 @@
 			$Rcap->y->asString( 16 )
 		);
 		
-		$result = $db->GetOne( $sql );
+		$result = $db->GetRow( $sql );
 		
 		return array( new primeFieldValue( $group->n_field, $result['scap'], 16 ), new primeFieldValue( $group->n_field, $result['hcap'], 16 ) ) ;
 	}
@@ -289,7 +328,7 @@
 			$Rcap->y->asString( 16 )
 		);
 		
-		$result = $db->GetOne( $sql );
+		$result = $db->GetRow( $sql );
 		
 		return array( new primeFieldValue( $group->n_field, $result['privR'], 16 ), $result['election'] );
 	}
@@ -343,7 +382,7 @@
 			$election
 		);
 
-		$result = $db->GetOne( $sql );
+		$result = $db->GetRow( $sql );
 		
 		return new primeFieldValue( $group->n_field, $result['priv'], 16 );
 	}
@@ -365,7 +404,7 @@
 			$election
 		);
 		
-		$result = $db->GetOne( $sql );
+		$result = $db->GetRow( $sql );
 		
 		return new elipticCurveValue( $group, $result['PubX'], $result['PubY'] , 16 );
 	}

@@ -1,0 +1,97 @@
+@CHARSET "UTF-8";
+
+html, body, table
+{
+	font-family: Arial, Helvetica, sans-serif !important;
+	font-size: 14px !important;
+	line-height: 18px;
+}
+
+html
+{
+	margin: 0px;
+}
+
+body
+{
+	margin: 0px;
+	color: #000;
+}
+
+a
+{
+	color: #6692de;
+}
+
+a:hover
+{
+	color: #000;
+}
+
+#menuholder
+{
+	height: 22px;
+	background-color: #6692de;	
+	color: #FFF;
+	text-align: center;
+	line-height: 20px;
+}
+
+#menu
+{
+	width: 800px;
+	margin: 0px auto;	
+}
+
+#menu a
+{
+	color: #FFF;
+	text-decoration: none;	
+}
+
+#menu a:hover
+{
+	color: #000;
+	text-decoration: underline;
+}
+
+#menu a.active
+{
+	color: #FFF;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#holder
+{
+	width: 800px;
+	margin: 10px auto 0px auto;
+}
+
+.right
+{
+	float: right;
+}
+
+.gap
+{
+	clear: both;
+	height: 10px;
+}
+
+table
+{
+	clear: both;
+}
+
+table thead td
+{
+	font-weight: bold;
+	border-bottom: 1px SOLID #CECECE;
+}
+
+table tbody td
+{
+	padding: 2px 0px;
+}
+}
