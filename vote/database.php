@@ -1,4 +1,7 @@
 <?php
+
+	date_default_timezone_set( 'Australia/Sydney' );
+
 	include_once dirname( __FILE__ ) . '/adodb5/adodb.inc.php';
 	require_once dirname( __FILE__ ) . '/src/group.php';
 	require_once dirname( __FILE__ ) . '/src/standardCurves.php';
@@ -138,6 +141,44 @@
 		);
 		
 		return $db->GetRow( $sql );
+	}
+	
+	function get_question( $id )
+	{
+		$db = get_db();
+		
+		$sql = sprintf( '
+			SELECT
+				q.*
+			FROM
+				`form_vote_questions` q
+			WHERE
+				q.id = %d
+			',
+			$id
+		);
+		
+		return $db->GetRow( $sql );
+	}
+	
+	function get_questions_for_election( $id )
+	{
+		$db = get_db();
+		
+		$sql = sprintf( '
+			SELECT
+				q.*, ( SELECT MAX(rank) FROM form_vote_questions q2 WHERE q.election_id = q2.election_id ) as max_rank
+			FROM
+				`form_vote_questions` q
+			WHERE
+				q.election_id = %d
+			ORDER BY
+				q.rank ASC
+			',
+			$id
+		);
+		
+		return $db->GetAll( $sql );
 	}
 	
 	function add_pub_key( $publicKey )

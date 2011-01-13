@@ -77,6 +77,7 @@
 	<head>
 		<title>Pirate Party Australia - Voting administration panel</title>
 		<style type="text/css" media="all">@import "/admin/admin.css";</style>
+		<script type="text/javascript" src="/jquery-1.4.2.min.js"></script>
 	</head>
 	<body>
 		<div id="menuholder">
@@ -102,6 +103,8 @@
 					{
 						case is_numeric( $_GET['_param'] ):
 							$ext = 'edit';
+							if( !empty( $_GET['_action'] ) )
+								$ext = $_GET['_action'];
 							break;
 						case 'add':
 							$ext = 'add';
