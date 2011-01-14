@@ -76,7 +76,7 @@
 		FROM
 			form_vote_questions q
 		WHERE
-			q.vote_id = %d
+			q.election_id = %d
 		ORDER BY
 			q.rank ASC
 		',
