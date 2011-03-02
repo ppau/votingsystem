@@ -176,7 +176,7 @@ HTML;
 				var sig = $j.base64Encode( $j.toJSON( { 'r': sigobj.r.asString( 16 ), 's': sigobj.s.asString( 16 ) } ) );
 				var Q = group.multiply( d, group.G() );
 				var pk = $j.base64Encode( $j.toJSON( Q.asJSONObj() ) );
-				var uri = 'http://vote.pirateparty.org.au/blindReq.php?req=' + req + '&sig=' + sig + '&pk=' + pk + '&callback=?';
+				var uri = '/blindReq.php?req=' + req + '&sig=' + sig + '&pk=' + pk + '&callback=?';
 				$j.ajax( {
 					url: uri,
 					dataType: 'jsonp',
@@ -200,7 +200,7 @@ HTML;
 					var Rcap = new Clipperz.Crypto.ECC.PrimeField.Point( { x:tx, y:ty, z: new Clipperz.Crypto.BigInt( '1' ) } );
 					var blindness = Clipperz.Crypto.ECBlind.blindness( vote, Rcap, group, hash );
 					var blindSign = $j.base64Encode( $j.toJSON( { 'hcap': blindness.hcap.asString( 16 ), 'Rcap': Rcap.asJSONObj() } ) );
-					var uri = 'http://vote.pirateparty.org.au/blindSign.php?req=' + blindSign + '&callback=?';
+					var uri = '/blindSign.php?req=' + blindSign + '&callback=?';
 					$j.ajax( {
 						url: uri,
 						dataType: 'jsonp',
@@ -225,7 +225,7 @@ HTML;
 						var scap = new Clipperz.Crypto.BigInt( data.scap, 16 )
 						var s = Clipperz.Crypto.ECBlind.unblindness( scap, blindness.R, Rcap, vote, blindness.beta, group, hash );
 						var bsig = $j.base64Encode( $j.toJSON( { 's': s.asString( 16 ), 'R': blindness.R.asJSONObj() } ) );
-						var uri = 'http://vote.pirateparty.org.au/addVote.php?vote=' + vote + '&election=' + election + '&bsig=' + bsig + '&callback=?';
+						var uri = '/addVote.php?vote=' + vote + '&election=' + election + '&bsig=' + bsig + '&callback=?';
 						$j.ajax( {
 							url: uri,
 							dataType: 'jsonp',
