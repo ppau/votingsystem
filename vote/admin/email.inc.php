@@ -4,7 +4,12 @@
 	include_once dirname( __FILE__ ) . '/../database.php';
 	//require_once dirname( __FILE__ ) . '/src/group.php';
 	//require_once dirname( __FILE__ ) . '/src/standardCurves.php';
-	
+
+	if(!isset($_GET['id']) || $_GET['id'] < 1)
+	{
+		die('You need to specify the vote ID number: admin/?act=email&id=7');
+	}
+
 	//Create the Transport
 	//$transport = Swift_MailTransport::newInstance();
 	$transport = Swift_SmtpTransport::newInstance( 'localhost', 25, '' );
@@ -25,6 +30,7 @@
 		$smarty = new Smarty;
 		$smarty->assign( 'name',  $ID['firstname'] . ' ' . $ID['surname'] );
 		$smarty->assign( 'privateKey', $privateKey->asString( 16 ) );
+		$smarty->assign( 'election_id', (int)$_GET['id']);
 		
 		$message = Swift_Message::newInstance( 'Here is your Vote' )
 			->setFrom( array('votes@pirateparty.org.au' => 'PPAU voting system' ) )
