@@ -1,0 +1,27 @@
+<?php
+$this->headScript()->appendFile("/js/MochiKit/MochiKit.js");
+$this->headScript()->appendFile("/js/jquery-1.4.2.min.js");
+$this->headScript()->appendFile("/js/jquery.json-2.2.min.js");
+$this->headScript()->appendFile("/js/jquery.base64.js");
+$this->headScript()->captureStart(); ?>
+jQuery._$ = MochiKit.DOM.getElement;
+var $j = jQuery.noConflict(); 
+<?php
+$this->headScript()->captureEnd();
+$this->headScript()->appendFile("/js/Clipperz/YUI/Utils.js");
+$this->headScript()->appendFile("/js/Clipperz/YUI/DomHelper.js");
+$this->headScript()->appendFile("/js/Clipperz/Base.js");
+$this->headScript()->appendFile("/js/Clipperz/Logging.js");
+$this->headScript()->appendFile("/js/Clipperz/ByteArray.js");
+$this->headScript()->appendFile("/js/Clipperz/Async.js");
+$this->headScript()->appendFile("/js/Clipperz/Crypto/BigInt.js");
+$this->headScript()->appendFile("/js/Clipperz/Crypto/Base.js");
+$this->headScript()->appendFile("/js/Clipperz/Crypto/AES.js");
+$this->headScript()->appendFile("/js/Clipperz/Crypto/SHA.js");
+$this->headScript()->appendFile("/js/Clipperz/Crypto/PRNG.js");
+$this->headScript()->appendFile("/js/Clipperz/Crypto/ECC/PrimeField/FiniteField.js");
+$this->headScript()->appendFile("/js/Clipperz/Crypto/ECC/PrimeField/Curve.js");
+$this->headScript()->appendFile("/js/Clipperz/Crypto/ECC/PrimeField/Point.js");
+$this->headScript()->appendFile("/js/Clipperz/Crypto/ECC/StandardCurves.js");
+$this->headScript()->appendFile("/js/Clipperz/Crypto/ecdsa.js");
+$this->headScript()->appendFile("/js/Clipperz/Crypto/ECBlind.js");
