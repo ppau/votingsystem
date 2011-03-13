@@ -1,0 +1,40 @@
+body
+{
+	background-color: #35BBF3;
+	font-family: Lucida Grande, sans-serif;
+}
+
+h1
+{
+	text-align: center;
+	font-family: Lucida Grande, sans-serif;
+	color: white;
+}
+
+.contentPane
+{
+	background-color: #AEE3F8;
+	border-radius: 20px;
+	padding: 25px;
+	width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align:center;
+}
+
+#loading
+{
+	font-size: 24px;
+	padding-top: 100px;
+	padding-bottom: 100px;
+}
+
+.error
+{
+	border-radius: 10px;
+	background-color: red;
+	color: white;
+	padding: 10px;
+}
