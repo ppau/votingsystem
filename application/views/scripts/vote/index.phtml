@@ -1,11 +1,16 @@
 <?php
-// Load our colourful array of libraries
+
+// Load CSS
+$this->headLink()->appendStylesheet('/css/vote.css');
+
+// Load our colourful array of JS libraries
 // NOTE: these are loaded at the end of the body so that the page doesn't hang blank
 $this->inlineScript()->appendFile("/js/MochiKit/MochiKit.js");
 $this->inlineScript()->appendFile("/js/jquery-1.4.2.min.js");
 $this->inlineScript()->appendFile("/js/jquery.json-2.2.min.js");
 $this->inlineScript()->appendFile("/js/jquery.base64.js");
-$this->inlineScript()->captureStart(); ?>
+$this->inlineScript()->captureStart();
+?>
 jQuery._$ = MochiKit.DOM.getElement;
 var $j = jQuery.noConflict(); 
 <?php
@@ -30,13 +35,20 @@ $this->inlineScript()->appendFile("/js/Clipperz/Crypto/ECBlind.js");
 
 // Load our JS code - this will reveal the form once we're done init
 $this->inlineScript()->appendFile("/js/vote.js");
-?>
-<div class="show_while_loading">
-<h1>Loading...</h1>
-</div>
 
-<div style="display:none" class="hide_while_loading">
-<form id="vote">
+// Give JS an array of all question IDs
+$this->inlineScript()->captureStart();
+?>
+var questions = [ <?php echo implode(',',$this->questionIds) ?> ];
+<?php
+$this->inlineScript()->captureEnd();
+
+
+// BEGIN MAIN PAGE
+?>
+
+<div style="display:none" class="hideWhileLoading contentPane">
+<form id="vote" onsubmit="alert('submit!')">
 <?php foreach($this->questions as $question): ?>
 	<h3><?php echo $question->question ?></h3>
 	<?php if(!empty($question->info)): ?>
@@ -45,7 +57,13 @@ $this->inlineScript()->appendFile("/js/vote.js");
 	<?php echo $this->partial('vote/form-'.$question->type.'.phtml',array('question' => $question)) ?>
 <?php endforeach ?>
 <p>Warning: Once this form has been submitted your key will expire and you will not be able to make changes to your selections.</p>
-<input type="submit" value="Submit" />
+<input id="submit" type="submit" value="Submit" disabled="disabled" />
+<p class="needMoreEntropy error" style="display:none">Hold on a moment, we're still generating entropy for the pseudo-random number generator. Moving your mouse around this window will help generate better entropy.</p>
 </form>
+</div>
+
+<div class="showWhileLoading contentPane" id="loading">
+<p><img src="/image/loading.gif" alt="Loading..." /></p>
+<p>Loading...</p>
 </div>
 
