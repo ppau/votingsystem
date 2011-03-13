@@ -15,11 +15,6 @@ class VoteController extends Zend_Controller_Action
 			throw new Exception("Invalid polli request - no ID specified");
 		}
 		
-		if($this->_getParam('key') == '')
-		{
-			throw new Exception("Invalid poll request - no key specified");
-		}
-		
 		$pollsDb = new App_Model_DbTable_Polls();
 		$poll = $pollsDb->fetchValidPoll($this->_getParam('id'));	
 		
@@ -42,7 +37,6 @@ class VoteController extends Zend_Controller_Action
 		$this->view->questions = $questions;	
 		$this->view->questionIds = $questionIds;
 	}
-
 
 }
 
