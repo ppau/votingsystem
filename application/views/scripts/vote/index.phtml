@@ -1,27 +1,51 @@
 <?php
-$this->headScript()->appendFile("/js/MochiKit/MochiKit.js");
-$this->headScript()->appendFile("/js/jquery-1.4.2.min.js");
-$this->headScript()->appendFile("/js/jquery.json-2.2.min.js");
-$this->headScript()->appendFile("/js/jquery.base64.js");
-$this->headScript()->captureStart(); ?>
+// Load our colourful array of libraries
+// NOTE: these are loaded at the end of the body so that the page doesn't hang blank
+$this->inlineScript()->appendFile("/js/MochiKit/MochiKit.js");
+$this->inlineScript()->appendFile("/js/jquery-1.4.2.min.js");
+$this->inlineScript()->appendFile("/js/jquery.json-2.2.min.js");
+$this->inlineScript()->appendFile("/js/jquery.base64.js");
+$this->inlineScript()->captureStart(); ?>
 jQuery._$ = MochiKit.DOM.getElement;
 var $j = jQuery.noConflict(); 
 <?php
-$this->headScript()->captureEnd();
-$this->headScript()->appendFile("/js/Clipperz/YUI/Utils.js");
-$this->headScript()->appendFile("/js/Clipperz/YUI/DomHelper.js");
-$this->headScript()->appendFile("/js/Clipperz/Base.js");
-$this->headScript()->appendFile("/js/Clipperz/Logging.js");
-$this->headScript()->appendFile("/js/Clipperz/ByteArray.js");
-$this->headScript()->appendFile("/js/Clipperz/Async.js");
-$this->headScript()->appendFile("/js/Clipperz/Crypto/BigInt.js");
-$this->headScript()->appendFile("/js/Clipperz/Crypto/Base.js");
-$this->headScript()->appendFile("/js/Clipperz/Crypto/AES.js");
-$this->headScript()->appendFile("/js/Clipperz/Crypto/SHA.js");
-$this->headScript()->appendFile("/js/Clipperz/Crypto/PRNG.js");
-$this->headScript()->appendFile("/js/Clipperz/Crypto/ECC/PrimeField/FiniteField.js");
-$this->headScript()->appendFile("/js/Clipperz/Crypto/ECC/PrimeField/Curve.js");
-$this->headScript()->appendFile("/js/Clipperz/Crypto/ECC/PrimeField/Point.js");
-$this->headScript()->appendFile("/js/Clipperz/Crypto/ECC/StandardCurves.js");
-$this->headScript()->appendFile("/js/Clipperz/Crypto/ecdsa.js");
-$this->headScript()->appendFile("/js/Clipperz/Crypto/ECBlind.js");
+$this->inlineScript()->captureEnd();
+$this->inlineScript()->appendFile("/js/Clipperz/YUI/Utils.js");
+$this->inlineScript()->appendFile("/js/Clipperz/YUI/DomHelper.js");
+$this->inlineScript()->appendFile("/js/Clipperz/Base.js");
+$this->inlineScript()->appendFile("/js/Clipperz/Logging.js");
+$this->inlineScript()->appendFile("/js/Clipperz/ByteArray.js");
+$this->inlineScript()->appendFile("/js/Clipperz/Async.js");
+$this->inlineScript()->appendFile("/js/Clipperz/Crypto/BigInt.js");
+$this->inlineScript()->appendFile("/js/Clipperz/Crypto/Base.js");
+$this->inlineScript()->appendFile("/js/Clipperz/Crypto/AES.js");
+$this->inlineScript()->appendFile("/js/Clipperz/Crypto/SHA.js");
+$this->inlineScript()->appendFile("/js/Clipperz/Crypto/PRNG.js");
+$this->inlineScript()->appendFile("/js/Clipperz/Crypto/ECC/PrimeField/FiniteField.js");
+$this->inlineScript()->appendFile("/js/Clipperz/Crypto/ECC/PrimeField/Curve.js");
+$this->inlineScript()->appendFile("/js/Clipperz/Crypto/ECC/PrimeField/Point.js");
+$this->inlineScript()->appendFile("/js/Clipperz/Crypto/ECC/StandardCurves.js");
+$this->inlineScript()->appendFile("/js/Clipperz/Crypto/ecdsa.js");
+$this->inlineScript()->appendFile("/js/Clipperz/Crypto/ECBlind.js");
+
+// Load our JS code - this will reveal the form once we're done init
+$this->inlineScript()->appendFile("/js/vote.js");
+?>
+<div class="show_while_loading">
+<h1>Loading...</h1>
+</div>
+
+<div style="display:none" class="hide_while_loading">
+<form id="vote">
+<?php foreach($this->questions as $question): ?>
+	<h3><?php echo $question->question ?></h3>
+	<?php if(!empty($question->info)): ?>
+		<p><?php echo $question->info ?></p>
+	<?php endif ?>
+	<?php echo $this->partial('vote/form-'.$question->type.'.phtml',array('question' => $question)) ?>
+<?php endforeach ?>
+<p>Warning: Once this form has been submitted your key will expire and you will not be able to make changes to your selections.</p>
+<input type="submit" value="Submit" />
+</form>
+</div>
+
