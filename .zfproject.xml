@@ -12,10 +12,40 @@
           <actionMethod actionName="index"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
+        <controllerFile controllerName="Vote">
+          <actionMethod actionName="index"/>
+        </controllerFile>
+        <controllerFile controllerName="Auth">
+          <actionMethod actionName="index"/>
+        </controllerFile>
+        <controllerFile controllerName="Admin">
+          <actionMethod actionName="index"/>
+        </controllerFile>
       </controllersDirectory>
       <formsDirectory enabled="false"/>
       <layoutsDirectory enabled="false"/>
-      <modelsDirectory/>
+      <modelsDirectory>
+        <dbTableDirectory>
+          <dbTableFile dbTableName="FormVote"/>
+          <dbTableFile dbTableName="FormVoteAdmins"/>
+          <dbTableFile dbTableName="FormVoteQuestions"/>
+          <dbTableFile dbTableName="Keys"/>
+          <dbTableFile dbTableName="Pubkey"/>
+          <dbTableFile dbTableName="R"/>
+          <dbTableFile dbTableName="Registrations"/>
+          <dbTableFile dbTableName="SolsUsers"/>
+          <dbTableFile dbTableName="Votes"/>
+          <dbTableFile dbTableName="AdminUsers"/>
+          <dbTableFile dbTableName="Keys"/>
+          <dbTableFile dbTableName="KeysPublic"/>
+          <dbTableFile dbTableName="KeysR"/>
+          <dbTableFile dbTableName="Participants"/>
+          <dbTableFile dbTableName="Polls"/>
+          <dbTableFile dbTableName="Questions"/>
+          <dbTableFile dbTableName="SolsUsers"/>
+          <dbTableFile dbTableName="Votes"/>
+        </dbTableDirectory>
+      </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <viewsDirectory>
         <viewScriptsDirectory>
@@ -24,6 +54,15 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Error">
             <viewScriptFile forActionName="error"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Vote">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Auth">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
@@ -60,6 +99,15 @@
       <testApplicationDirectory>
         <testApplicationControllerDirectory>
           <testApplicationControllerFile forControllerName="Index">
+            <testApplicationActionMethod forActionName="index"/>
+          </testApplicationControllerFile>
+          <testApplicationControllerFile forControllerName="Vote">
+            <testApplicationActionMethod forActionName="index"/>
+          </testApplicationControllerFile>
+          <testApplicationControllerFile forControllerName="Auth">
+            <testApplicationActionMethod forActionName="index"/>
+          </testApplicationControllerFile>
+          <testApplicationControllerFile forControllerName="Admin">
             <testApplicationActionMethod forActionName="index"/>
           </testApplicationControllerFile>
         </testApplicationControllerDirectory>
