@@ -5,10 +5,19 @@ class VoteController extends Zend_Controller_Action
 
 	public function init()
 	{
-		/* Initialize action controller here */
+		$contextSwitch = $this->_helper->contextSwitch;
+		$contextSwitch->addActionContext('request','json')
+		              ->addActionContext('sign','json')
+		              ->addActionContext('process','json')
+		              ->initContext();
 	}
 
 	public function indexAction()
+	{
+		
+	}
+
+	public function viewAction()
 	{
 		if($this->_getParam('id') == '')
 		{
@@ -38,5 +47,19 @@ class VoteController extends Zend_Controller_Action
 		$this->view->questionIds = $questionIds;
 	}
 
+	public function requestAction()
+	{
+		$this->view->test = 'lol';
+	}
+
+	public function signAction()
+	{
+		
+	}
+	
+	public function processAction()
+	{
+		
+	}
 }
 
