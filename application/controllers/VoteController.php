@@ -1,5 +1,9 @@
 <?php
 
+require_once 'Crypto/group.php';
+require_once 'Crypto/standardCurves.php';
+require_once 'Crypto/ECDSA.php';
+
 class VoteController extends Zend_Controller_Action
 {
 
@@ -8,8 +12,7 @@ class VoteController extends Zend_Controller_Action
 		$contextSwitch = $this->_helper->contextSwitch;
 		$contextSwitch->addActionContext('request','json')
 		              ->addActionContext('sign','json')
-		              ->addActionContext('process','json')
-		              ->initContext();
+		              ->addActionContext('process','json');
 	}
 
 	public function indexAction()
@@ -49,6 +52,7 @@ class VoteController extends Zend_Controller_Action
 
 	public function requestAction()
 	{
+		$this->_helper->contextSwitch->initContext('json');
 		$this->view->test = 'lol';
 	}
 
