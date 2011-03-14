@@ -1,5 +1,7 @@
 function submitForm()
 {
+	alert('lols');
+	
 	var key = window.location.href.split('#')[1];
 	var group = Clipperz.Crypto.ECC.StandardCurves.P256();
 	var d = new Clipperz.Crypto.BigInt(key, 16);
@@ -7,8 +9,10 @@ function submitForm()
 	
 	for(id in questions)
 	{
-		submitQuestionStepOne(id, d, group, hash);
+		submitQuestionRequest(id, d, group, hash);
 	}
+
+	return false;
 }
 
 // step one
@@ -102,13 +106,12 @@ function submitQuestionResults(data)
 function readyToSubmit()
 {
 	$j('.needMoreEntropy').slideUp();
-	$j('#submit').unbind('click');
+	$j('#vote').unbind('submit');
+	$j('#vote').submit(submitForm);
 }
 
 // INIT: callback when page loaded
 $j(function() {
-	$j('.showWhileLoading').slideUp();
-	$j('.hideWhileLoading').slideDown();
 
 	// Add a callback to let us know when we have enough entropy for the PRNG
 	Clipperz.Async.callbacks('Clipperz.Crypto.PRNG.main_test',[
@@ -118,9 +121,11 @@ $j(function() {
 
 	// if they click submit before we're ready then display a message saying why it doesnt work
 	// this handler will be removed when we're ready
-	$j('#submit').click(function() {
+	$j('#vote').submit(function() {
 		$j('.needMoreEntropy').slideDown();	
 		return false;
 	});
-	$j('#submit').attr('disabled',false);		
+	
+	$j('.showWhileLoading').slideUp();
+	$j('.hideWhileLoading').slideDown();
 });
