@@ -14,6 +14,8 @@ h1
 .contentPane
 {
 	background-color: #AEE3F8;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
 	border-radius: 20px;
 	padding: 25px;
 	width: 700px;
@@ -24,6 +26,12 @@ h1
 	text-align:center;
 }
 
+#error
+{
+	background-color: red;
+	color: white;
+}
+
 #loading
 {
 	font-size: 24px;
@@ -31,8 +39,15 @@ h1
 	padding-bottom: 100px;
 }
 
+#loadingText
+{
+	font-size: 16px;
+}
+
 .error
 {
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
 	border-radius: 10px;
 	background-color: red;
 	color: white;

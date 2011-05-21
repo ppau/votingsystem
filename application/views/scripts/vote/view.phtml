@@ -9,6 +9,7 @@ $this->inlineScript()->appendFile("/js/MochiKit/MochiKit.js");
 $this->inlineScript()->appendFile("/js/jquery-1.4.2.min.js");
 $this->inlineScript()->appendFile("/js/jquery.json-2.2.min.js");
 $this->inlineScript()->appendFile("/js/jquery.base64.js");
+$this->inlineScript()->appendFile("/js/jquery.progressbar.min.js");
 $this->inlineScript()->captureStart();
 ?>
 jQuery._$ = MochiKit.DOM.getElement;
@@ -40,6 +41,7 @@ $this->inlineScript()->appendFile("/js/vote.js");
 $this->inlineScript()->captureStart();
 ?>
 var questions = [ <?php echo implode(',',$this->questionIds) ?> ];
+var pollid = <?php echo intval($this->pollid) ?>;
 <?php
 $this->inlineScript()->captureEnd();
 
@@ -47,7 +49,15 @@ $this->inlineScript()->captureEnd();
 // BEGIN MAIN PAGE
 ?>
 
-<div style="display:none" class="hideWhileLoading contentPane">
+<div class="contentPane" id="loading">
+<p><img src="/image/loading.gif" alt="Loading..." /></p>
+<p><span id="progressBar"></span></p>
+<p>Loading...</p>
+<p id="loadingText"></p>
+</div>
+
+
+<div style="display:none" class="contentPane" id="content">
 <form id="vote" onsubmit="return false">
 <?php foreach($this->questions as $question): ?>
 	<h3><?php echo $question->question ?></h3>
@@ -62,8 +72,13 @@ $this->inlineScript()->captureEnd();
 </form>
 </div>
 
-<div class="showWhileLoading contentPane" id="loading">
-<p><img src="/image/loading.gif" alt="Loading..." /></p>
-<p>Loading...</p>
+<div style="display:none" class="contentPane" id="error">
+
+</div>
+
+<div style="display:none" class="contentPane" id="results">
+<h1>Good news everyone!</h1>
+<img src="/image/good-news-everyone.jpg" />
+<p>Your vote has been submitted successfully!</p>
 </div>
 
