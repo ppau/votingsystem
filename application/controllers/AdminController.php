@@ -49,7 +49,7 @@ class AdminController extends Zend_Controller_Action
 			$mail->addTo($p->email,$p->firstname.' '.$p->surname);
 			$mail->setFrom('votes@pirateparty.org.au','PPAU Voting System');
 			$mail->setSubject('PPAU Vote Key');
-			$mail->setBodyText('http://ppauvote.sdunster.com/vote/view/id/'.$this->_getParam('id').'/#'.$privateKey->asString(16));
+			$mail->setBodyText('http://vote.pirateparty.org.au/poll/'.$this->_getParam('id').'/#'.$privateKey->asString(16));
 			$mail->send();
 
 			echo 'sent email to '.$p->firstname.' '.$p->surname.' - '.$p->email.'<hr />';	
