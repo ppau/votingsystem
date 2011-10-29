@@ -1,6 +1,6 @@
 body
 {
-	background-color: #35BBF3;
+	background-color: #004471;
 	font-family: Lucida Grande, sans-serif;
 }
 
@@ -11,9 +11,15 @@ h1
 	color: white;
 }
 
+img.logo {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .contentPane
 {
-	background-color: #AEE3F8;
+	background-color: #FFFFFF;
 	-webkit-border-radius: 20px;
 	-moz-border-radius: 20px;
 	border-radius: 20px;
