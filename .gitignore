@@ -1,4 +1,6 @@
-
+/.hg
+/.hgignore
+/library/Zend
 /.settings
 /.buildpath
 /.project
