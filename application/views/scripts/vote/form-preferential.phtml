@@ -4,6 +4,6 @@ $options = json_decode($this->question->options);
 <?php if(is_array($options) && !empty($options)): ?>
 	<?php foreach($options as $option): ?>
 		<b><?php echo $this->escape($option) ?>:</b>
-		<input type="text" name="<?php echo $this->question->name ?>-<?php echo $option ?>" value="" width="3" />
+		<input type="text" name="<?php echo $this->question->name ?>-<?php echo $option ?>" value="" length="3" /><br />
 	<?php endforeach ?>
 <?php endif ?>
