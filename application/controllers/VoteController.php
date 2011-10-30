@@ -33,8 +33,9 @@ class VoteController extends Zend_Controller_Action
 			throw new Exception("Invalid poll request - no ID specified");
 		}
 		
+		$pollId = $this->_getParam('id');
 		$pollsDb = new App_Model_DbTable_Polls();
-		$poll = $pollsDb->fetchValidPoll($this->_getParam('id'));	
+		$poll = $pollsDb->fetchValidPoll($pollId);	
 		
 		if($poll == NULL)
 		{
@@ -42,7 +43,7 @@ class VoteController extends Zend_Controller_Action
 		}
 	
 		$questionsDb = new App_Model_DbTable_Questions();
-		$questions = $questionsDb->fetchQuestionsForPoll($this->_getParam('id'));
+		$questions = $questionsDb->fetchQuestionsForPoll($pollId);
 
 		$questionIds = array();
 

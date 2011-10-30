@@ -8,3 +8,5 @@
 /.gitconfig
 /.viminfo
 /.bash_history
+/.vimrc
+/.ssh
