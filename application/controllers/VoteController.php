@@ -229,7 +229,7 @@ class VoteController extends Zend_Controller_Action
 			$row->Ry = $blindSignature['R']['y'];
 			$row->s = $blindSignature['s'];
 			$row->questionid = $pollid;
-			$row->data = $voteData;
+			$row->data = base64_decode($voteData);
 
 			$row->save();	
 		
