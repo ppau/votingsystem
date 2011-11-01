@@ -141,7 +141,7 @@ class VoteController extends Zend_Controller_Action
 			$rcap = new elipticCurveValue($group, $req['rcap']['x'], $req['rcap']['y'], 16);
 
 			$db1 = new App_Model_DbTable_VotingState();
-			$db2 = new App_Model_DbTable_Questions();
+			$db2 = new App_Model_DbTable_Polls();
 		
 			// verify the data the sent us is legit (check it matches what
 			// we sent them in step 1	
@@ -163,14 +163,14 @@ class VoteController extends Zend_Controller_Action
 				$hcap = new primeFieldValue($group->n_field, $req['hcap'], 16);
 				$k = new primeFieldValue($group->n_field, $state->r_private, 16);
 				
-				// fetch this question's private key
-				if(!($question = $db2->fetchQuestion($state->questionid)))
+				// fetch this polls's private key
+				if(!($poll = $db2->fetchValidPoll($state->pollid)))
 				{
-					throw new Exception("Unable to fetch question's private key");
+					throw new Exception("Unable to fetch poll's private key");
 				}
-				$d = new primeFieldValue($group->n_field, $question->key_private, 16);
+				$d = new primeFieldValue($group->n_field, $poll->key_private, 16);
 
-				// sign their key with the key for this question
+				// sign their key with the key for this poll 
 				$scap = ecBlindSign($rcap, $d, $hcap, $k, $group);
 				
 				// store in the database for later
