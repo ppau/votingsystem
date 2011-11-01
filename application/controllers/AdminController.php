@@ -58,24 +58,24 @@ class AdminController extends Zend_Controller_Action
 		$this->_helper->viewRenderer->setNoRender(true);	
 	}
 
-	public function questionAction()
+	public function pollAction()
 	{
-		$questionid = $this->_getParam('id');
+		$pollid = $this->_getParam('id');
 		
-		if($questionid == null || $questionid < 1)
+		if($pollid == null || $pollid < 1)
 		{
 			throw new Exception('must pass ID');
 		}
 		
-		$db = new App_Model_DbTable_Questions();
-		if(!($question = $db->fetchQuestion($questionid)))
+		$db = new App_Model_DbTable_Polls();
+		if(!($poll = $db->find($pollid)->getRow(0)))
 		{
 			throw new Exception('invalid ID');
 		}
 
-		if($question->key_private != NULL && $question->key_private != '')
+		if($poll->key_private != NULL && $poll->key_private != '')
 		{
-			throw new Exception('Question already has private key - remove from DB before running this script');
+			throw new Exception('Poll already has private key - remove from DB before running this script');
 		}
 
 		// generate a key
@@ -84,10 +84,10 @@ class AdminController extends Zend_Controller_Action
 		$publicKey = $group->G->intMultiply($privateKey->asString());
 		$scaled = $publicKey->scale();
 
-		$question->key_public_x = $scaled->x->asString(16);
-		$question->key_public_y = $scaled->y->asString(16);
-		$question->key_private = $privateKey->asString(16);
-		$question->save();
+		$poll->key_public_x = $scaled->x->asString(16);
+		$poll->key_public_y = $scaled->y->asString(16);
+		$poll->key_private = $privateKey->asString(16);
+		$poll->save();
 		
 		echo 'success!';
 
