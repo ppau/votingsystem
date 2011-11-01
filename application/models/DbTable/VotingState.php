@@ -30,7 +30,7 @@ class App_Model_DbTable_VotingState extends Zend_Db_Table_Abstract
 	}
 */
 
-	public function fetchParticipant($x, $y, $questionid)
+	public function fetchParticipant($x, $y, $pollid)
 	{
 		if(!is_string($x) || !is_string($y))
 		{
@@ -38,7 +38,7 @@ class App_Model_DbTable_VotingState extends Zend_Db_Table_Abstract
 		}
 
 		$result = $this->fetchRow($this->select()
-			->where('questionid = ?',$questionid)
+			->where('pollid = ?',$pollid)
 			->where('key_public_x = ?',$x)
 			->where('key_public_y = ?',$y));	
 		

@@ -94,7 +94,7 @@ class VoteController extends Zend_Controller_Action
 			
 			$db = new App_Model_DbTable_VotingState();
 			
-			// check if the voter already has an R for this question
+			// check if the voter already has an R for this poll
 			if($state = $db->fetchParticipant($participant->x->asString(16),$participant->y->asString(16), $req['id']))
 			{
 				// remind them of their current R
@@ -102,14 +102,14 @@ class VoteController extends Zend_Controller_Action
 			}
 			else
 			{
-				// generate a new R for this question
+				// generate a new R for this poll
 				$privateKey = $group->n_field->randomMemberNOZero();
 				$publicKey  = $group->G->intMultiply( $privateKey->asString() );
 				$scaled = $publicKey->scale();
 				
 				// store the R for later
 				$newKey = $db->createRow();
-				$newKey->questionid = $req['id'];
+				$newKey->pollid = $req['id'];
 				$newKey->key_public_x = $participant->x->asString(16);
 				$newKey->key_public_y = $participant->y->asString(16);
 				$newKey->r_public_x = $scaled->x->asString(16);
@@ -191,11 +191,11 @@ class VoteController extends Zend_Controller_Action
 		}
 	}
 
-	public function verifyVoteData($voteData, $blindSignature, $question, $group)
+	public function verifyVoteData($voteData, $blindSignature, $poll, $group)
 	{
 		$s = new primeFieldValue($group->n_field, $blindSignature['s'], 16);
 		$M = $voteData;
-		$Q = new elipticCurveValue($group, $question->key_public_x, $question->key_public_y, 16);
+		$Q = new elipticCurveValue($group, $poll->key_public_x, $poll->key_public_y, 16);
 		$R = new elipticCurveValue($group, $blindSignature['R']['x'], $blindSignature['R']['y'], 16);
 		$hash = 'sha256';
 		return ecBlindVerify($R, $s, $M, $Q, $group, $hash);
@@ -212,13 +212,13 @@ class VoteController extends Zend_Controller_Action
 			$blindSignature = json_decode(base64_decode($this->_getParam('bsig')),true);
 			$group = $this->getGroup();
 	
-			$table = new App_Model_DbTable_Questions();
-			if(($question = $table->fetchQuestion($pollid)) == NULL)
+			$table = new App_Model_DbTable_Polls();
+			if(($poll = $table->fetchValidPoll($pollid)) == NULL)
 			{
-				throw new Exception('Question doesn\'t exist');
+				throw new Exception('Poll doesn\'t exist');
 			}
 	
-			if(!$this->verifyVoteData($voteData, $blindSignature, $question, $group))
+			if(!$this->verifyVoteData($voteData, $blindSignature, $poll, $group))
 			{
 				throw new Exception('The vote data was not signed correctly - vote cannot be stored');
 			}
@@ -228,7 +228,7 @@ class VoteController extends Zend_Controller_Action
 			$row->Rx = $blindSignature['R']['x'];
 			$row->Ry = $blindSignature['R']['y'];
 			$row->s = $blindSignature['s'];
-			$row->questionid = $pollid;
+			$row->pollid = $pollid;
 			$row->data = base64_decode($voteData);
 
 			$row->save();	
