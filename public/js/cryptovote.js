@@ -121,7 +121,7 @@ CryptoVote.process = function(data, id, blindness, vote, Rcap, group, hash)
 	var hcapOut = new Clipperz.Crypto.BigInt( data.hcap, 16 );
 	if( !hcapOut.equals( blindness.hcap ) )
 	{
-		CryptoVote.showError("Either something REALLY bad happened or you have already submitted your vote.");
+		CryptoVote.showError("It seems this key has already been used to submit a vote.");
 		return;
 	}
 
