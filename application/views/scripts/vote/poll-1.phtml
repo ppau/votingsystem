@@ -1,3 +1,14 @@
+<?php
+$this->inlineScript()->captureStart();
+?>
+// register validator
+var validate = function() {
+	return HardValidate.validate($('form#vote'))
+}
+PPAUVote.addValidator(validate);
+<?php
+$this->inlineScript()->captureEnd();
+?>
 
 <h2>Congress 2011 Motions</h2>
 

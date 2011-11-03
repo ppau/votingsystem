@@ -35,7 +35,9 @@ $this->inlineScript()->appendFile("/js/Clipperz/Crypto/ecdsa.js");
 $this->inlineScript()->appendFile("/js/Clipperz/Crypto/ECBlind.js");
 
 // Load our JS code - this will reveal the form once we're done init
-$this->inlineScript()->appendFile("/js/vote.js");
+$this->inlineScript()->appendFile("/js/ppau.js"); // code to run voting UI
+$this->inlineScript()->appendFile("/js/cryptovote.js"); // code to submit vote
+$this->inlineScript()->appendFile("/js/hardvalidate.js");
 
 // Give JS an array of all question IDs
 $this->inlineScript()->captureStart();
