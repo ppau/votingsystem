@@ -7,21 +7,21 @@ debug = function(msg) {
 };
 
 HardValidate.css = {
-	"warning": "warning"
+	"warning": "error"
 }
 
 HardValidate.validate = function(form) {
 	var valid = true;
 	// Clean up old messages
-	$("." + HardValidate.css.warning).remove();
+	jQuery("." + HardValidate.css.warning).remove();
 
 	for (var qType in HardValidate.isValid) {
 		debug(qType);
-		$(form).find("." + qType).each(function() {
+		jQuery(form).find("." + qType).each(function() {
 			debug(this);
 			var res = HardValidate.isValid[qType](this);
 			if (res !== true && valid) {
-				$(this).find('input, textarea').focus();
+				jQuery(this).find('input, textarea').focus();
 				valid = false;
 			}
 			debug(qType + " valid: " + valid + " (" + res + ")");
@@ -36,22 +36,22 @@ HardValidate.validate = function(form) {
 HardValidate.messagePool = {
 	"shorttext": function(id, data) {
 		if (data === false) {
-			$("<div class='"+HardValidate.css.warning+"'>Please fill out this field.</div>").appendTo($(id));
+			jQuery("<div class='"+HardValidate.css.warning+"'>Please fill out this field.</div>").appendTo(jQuery(id));
 		}
 	},
 	"longtext": function(id, data) {
 		if (data === false) {
-			$("<div class='"+HardValidate.css.warning+"'>Please fill out this field.</div>").appendTo($(id));
+			jQuery("<div class='"+HardValidate.css.warning+"'>Please fill out this field.</div>").appendTo(jQuery(id));
 		}
 	},
 	"multiple": function(id, data) {
 		if (data === false) {
-			$("<div class='"+HardValidate.css.warning+"'>Please select an option.</div>").appendTo($(id));
+			jQuery("<div class='"+HardValidate.css.warning+"'>Please select an option.</div>").appendTo(jQuery(id));
 		}
 	},
 	"gauge": function(id, data) {
 		if (data === false) {
-			$("<div class='"+HardValidate.css.warning+"'>Please select an option.</div>").appendTo($(id));
+			jQuery("<div class='"+HardValidate.css.warning+"'>Please select an option.</div>").appendTo(jQuery(id));
 		}
 	},
 	"preferential": function(id, data) {
@@ -60,24 +60,24 @@ HardValidate.messagePool = {
 		}
 
 		if (data.indexOf("MAX") > -1) {
-			$("<div class='"+HardValidate.css.warning+"'>A preference is beyond the maximum allowed.</div>")
-				.appendTo($(id));
+			jQuery("<div class='"+HardValidate.css.warning+"'>A preference is beyond the maximum allowed.</div>")
+				.appendTo(jQuery(id));
 		}
 		if (data.indexOf("MIN") > -1) {
-			$("<div class='"+HardValidate.css.warning+"'>A preference is beyond the minimum allowed.</div>")
-				.appendTo($(id));
+			jQuery("<div class='"+HardValidate.css.warning+"'>A preference is beyond the minimum allowed.</div>")
+				.appendTo(jQuery(id));
 		}
 		if (data.indexOf("DUP") > -1) {
-			$("<div class='"+HardValidate.css.warning+"'>A preference has a duplicate.</div>")
-				.appendTo($(id));
+			jQuery("<div class='"+HardValidate.css.warning+"'>A preference has a duplicate.</div>")
+				.appendTo(jQuery(id));
 		}
 		if (data.indexOf("NAN") > -1) {
-			$("<div class='"+HardValidate.css.warning+"'>A preference contains invalid content.</div>")
-				.appendTo($(id));
+			jQuery("<div class='"+HardValidate.css.warning+"'>A preference contains invalid content.</div>")
+				.appendTo(jQuery(id));
 		}
 		if (data.indexOf("ALL") > -1) {
-			$("<div class='"+HardValidate.css.warning+"'>Please fill out all preferences before submitting.</div>")
-				.appendTo($(id));
+			jQuery("<div class='"+HardValidate.css.warning+"'>Please fill out all preferences before submitting.</div>")
+				.appendTo(jQuery(id));
 		}
 			
 	}
@@ -86,19 +86,19 @@ HardValidate.messagePool = {
 
 HardValidate.isValid = {
 	"shorttext": function(id) {
-		return !HardValidate.isMandatory(id) || $(id).find("input").val().trim() != "";
+		return !HardValidate.isMandatory(id) || jQuery(id).find("input").val().trim() != "";
 	},
 	"longtext": function(id) {
-		return !HardValidate.isMandatory(id) || $(id).find("textarea").val().trim() != "";
+		return !HardValidate.isMandatory(id) || jQuery(id).find("textarea").val().trim() != "";
 	},
 	"multiple": function(id) {
-		return !HardValidate.isMandatory(id) || $(id).find(":checked(input)").length > 0;
+		return !HardValidate.isMandatory(id) || jQuery(id).find(":checked(input)").length > 0;
 	},
 	"gauge": function(id) {
-		return !HardValidate.isMandatory(id) || $(id).find(":checked(input)").length > 0;
+		return !HardValidate.isMandatory(id) || jQuery(id).find(":checked(input)").length > 0;
 	},
 	"preferential": function(id) {
-		var inputs = $(id).find("input"),
+		var inputs = jQuery(id).find("input"),
 			minP = inputs.attr('min'),
 			maxP = inputs.attr('max'),
 			prefs = [],
@@ -107,16 +107,16 @@ HardValidate.isValid = {
 		inputs.each(function() {
 			var val;
 
-			if ($(this).val() == "") {
+			if (jQuery(this).val() == "") {
 				return;
 			}
 			
-			else if (!/^\d+$/.test($(this).val())) {
+			else if (!/^\d+$/.test(jQuery(this).val())) {
 				issues.push("NAN");
 				return;
 			}
 			
-			val = parseInt($(this).val())
+			val = parseInt(jQuery(this).val())
 			
 			if (prefs.indexOf(val) > -1) {
 				issues.push("DUP");
@@ -147,18 +147,18 @@ HardValidate.isValid = {
 };
 
 HardValidate.isMandatory = function(id) {
-	var res = !!$(id).find('input, textarea').attr('required');
+	var res = !!jQuery(id).find('input, textarea').attr('required');
 	debug("isMandatory: " + res);
 	return res;
 };
 
 HardValidate.bindSubmit = function(submit, form) {
-	$(submit).click(function(event) {
+	jQuery(submit).click(function(event) {
 		if(!HardValidate.validate(form)) {
 			event.preventDefault();
 		};
 	});
-	$(submit).submit(function(event) {
+	jQuery(submit).submit(function(event) {
 		if(!HardValidate.validate(form)) {
 			event.preventDefault();
 		};

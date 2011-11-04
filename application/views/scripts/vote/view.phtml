@@ -42,7 +42,6 @@ $this->inlineScript()->appendFile("/js/hardvalidate.js");
 // Give JS an array of all question IDs
 $this->inlineScript()->captureStart();
 ?>
-var questions = [ <?php echo implode(',',$this->questionIds) ?> ];
 var pollid = <?php echo intval($this->pollid) ?>;
 <?php
 $this->inlineScript()->captureEnd();

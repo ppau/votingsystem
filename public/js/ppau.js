@@ -62,9 +62,9 @@ PPAUVote.progress = function(progress) {
 
 PPAUVote.submit = function() {
 	// validate form first
-	for(var validator in PPAUVote.formValidators)
+	for(var i in PPAUVote.validators)
 	{
-		if(!validator())
+		if(!PPAUVote.validators[i]())
 			return false;
 	}
 

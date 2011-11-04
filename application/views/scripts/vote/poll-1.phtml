@@ -1,11 +1,13 @@
 <?php
 $this->inlineScript()->captureStart();
 ?>
-// register validator
-var validate = function() {
-	return HardValidate.validate($('form#vote'))
-}
-PPAUVote.addValidator(validate);
+$j(function() {
+	// register validator
+	var validate = function() {
+		return HardValidate.validate($j('form#vote'))
+	}
+	PPAUVote.addValidator(validate);
+});
 <?php
 $this->inlineScript()->captureEnd();
 ?>
@@ -119,5 +121,42 @@ $this->inlineScript()->captureEnd();
 </blockquote>
 <label><input type="radio" name="patents" value="yes" /> Yes</label>
 <label><input type="radio" name="patents" value="no" /> No</label>
+</fieldset>
+
+<fieldset>
+<legend>National Council Election</legend>
+<p><strong><a target="_blank" href="http://www.pirateparty.org.au/wiki/Congress_2011_Candidate_Statements">Please click here to see the candidate statements</a></strong></p>
+
+<p><em>As nobody but David Campbell stood for the position of President, he defaults to this position.</em></p>
+
+<p>Please select your preferences for the position of General Secretary:</p>
+<ul class="preferential">
+<li><label><input type="number" size="3" name="secretary-frew" min="1" max="3" required="required" />Simon Frew</label></li>
+<li><label><input type="number" size="3" name="secretary-haidon" min="1" max="3" required="required" />David Haidon</label></li>
+<li><label><input type="number" size="3" name="secretary-molloy" min="1" max="3" required="required" />Brendan Molloy</label></li>
+</ul>
+
+<p><em>As nobody but Rodney Serkowski stood for the position of Treasurer, he defaults to this position</em></p>
+
+<p>Please select your preferences for the position of Deputy President:</p>
+<ul class="preferential">
+<li><label><input type="number" size="3" name="deputy_president-frew" min="1" max="3" required="required" />Simon Frew</label></li>
+<li><label><input type="number" size="3" name="deputy_president-haidon" min="1" max="3" required="required" />David Haidon</label></li>
+<li><label><input type="number" size="3" name="deputy_president-molloy" min="1" max="3" required="required" />Brendan Molloy</label></li>
+</ul>
+
+<p>Please select your preferences for the position of Deputy Secretary:</p>
+<ul class="preferential">
+<li><label><input type="number" size="3" name="deputy_secretary-frew" min="1" max="3" required="required" />Simon Frew</label></li>
+<li><label><input type="number" size="3" name="deputy_secretary-haidon" min="1" max="3" required="required" />David Haidon</label></li>
+<li><label><input type="number" size="3" name="deputy_secretary-molloy" min="1" max="3" required="required" />Brendan Molloy</label></li>
+</ul>
+
+<p><em>As nobody but Jack Coulter stood for the position of Deputy Treasurer, he defaults to this position.</em></p>
+
+<p><em>As nobody but Alexis Shaw stood for the position of Party Agent, he defaults to this position.</em></p>
+
+<p><em>As nobody but Quentin Taran stood for a position on the Dispute Resolution Council, he defaults to this position.</em></p>
+
 </fieldset>
 
