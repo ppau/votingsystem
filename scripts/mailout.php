@@ -1,6 +1,7 @@
 #!/usr/bin/php
 <?php
 
+// must have trailing slash
 $URL = 'http://vote.pirateparty.org.au/';
 
 require_once './init.php';
@@ -18,6 +19,31 @@ if($argc != 2 || !is_numeric($argv[1]))
 	die();
 }
 
+$db = new App_Model_DbTable_Polls();
+$polls = $db->find($argv[1]);
+
+if(count($polls) == 0)
+{
+	die("Specified poll doesn't exist\n");
+}
+
+$poll = $polls->getRow(0);
+
+if($poll->active == 0)
+{
+	die("Poll isn't active (active = 0 in DB)\n");
+}
+
+if($poll->key_public_x == '' || $poll->key_public_y == '' | $poll->key_private == '')
+{
+	die("Must generate keys for this poll first\n");
+}
+
+if(!file_exists(dirname(__FILE__).'/templates/mailout-'.$poll->id.'.phtml'))
+{
+	die("./templates/mailout-".$poll->id.".phtml doesn't exist\n");
+}
+
 $db = new App_Model_DbTable_Participants();	
 $participants = $db->fetchNeedKeys();
 
@@ -25,9 +51,12 @@ $db = new App_Model_DbTable_ParticipantKeys();
 
 $group = new StandardCurve( 'P256' );
 
+$count = count($participants);
 echo "About to mail " . count($participants) . " key(s) - are you sure? (ctrl-c to bail) ";
 fgets(STDIN);
 echo "\n";
+
+$number = 0;
 
 foreach( $participants as $p )
 {
@@ -44,57 +73,26 @@ foreach( $participants as $p )
 	// TODO: add some extra metadata to the row that will determine
 	// what polls/questions this key can be used to vote in
 
-	$newKey->save();
-	$p->save();
+	$view = new Zend_View();
+	$view->setScriptPath(dirname(__FILE__).'/templates');
+	$view->firstname = $p->firstname;
+	$view->surname = $p->surname;
+	$view->email = $p->email;
+	$view->link = $URL.'poll/'.$poll->id.'/#'.$privateKey->asString(16);
 	
 	$mail = new Zend_Mail();
 	$mail->addTo($p->email,$p->firstname.' '.$p->surname);
-	$mail->setSubject('PPAU Vote Key');
-	$mail->setBodyText($URL.'/poll/'.$argv[1].'/#'.$privateKey->asString(16));
+	$mail->setSubject('PPAU Vote - '.$poll->name);
+	$mail->setBodyText($view->render('mailout-'.$poll->id.'.phtml'));
 	$mail->send();
+	
+	// save to the DB only after we've successfully dispatched the email
+	$newKey->save();
+	$p->save();
 
-	echo 'Sent email to '.$p->firstname.' '.$p->surname.' - '.$p->email."\n";	
+	$number++;
+
+	echo "(".str_pad($number,strlen($count),' ',STR_PAD_LEFT). "/".$count.') ';
+	echo "Sent email to ".$p->firstname.' '.$p->surname.' - '.$p->email."\n";	
 }
-
-
-
-
-
-/*
-
-		$pollid = $this->_getParam('id');
-		
-		if($pollid == null || $pollid < 1)
-		{
-			throw new Exception('must pass ID');
-		}
-		
-		$db = new App_Model_DbTable_Polls();
-		if(!($poll = $db->find($pollid)->getRow(0)))
-		{
-			throw new Exception('invalid ID');
-		}
-
-		if($poll->key_private != NULL && $poll->key_private != '')
-		{
-			throw new Exception('Poll already has private key - remove from DB before running this script');
-		}
-
-		// generate a key
-		$group = new StandardCurve('P256');
-		$privateKey = $group->n_field->randomMemberNOZero();
-		$publicKey = $group->G->intMultiply($privateKey->asString());
-		$scaled = $publicKey->scale();
-
-		$poll->key_public_x = $scaled->x->asString(16);
-		$poll->key_public_y = $scaled->y->asString(16);
-		$poll->key_private = $privateKey->asString(16);
-		$poll->save();
-		
-		echo 'success!';
-
-		$this->_helper->viewRenderer->setNoRender(true);
-	}
-}
-*/
 

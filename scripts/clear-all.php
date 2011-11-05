@@ -7,4 +7,22 @@ echo "About to clear ALL VOTE DATA FROM THE SYSTEM. This include VOTE, VOTE STAT
 fgets(STDIN);
 echo "\n";
 
+$db = Zend_Db_Table::getDefaultAdapter();
+
+$db->beginTransaction();
+
+try {
+	$db->query("TRUNCATE TABLE voting_state");
+	$db->query("TRUNCATE TABLE participant_keys");
+	$db->query("TRUNCATE TABLE votes");
+	
+	$db->commit();
+	echo "done\n";
+}
+catch(Exception $e)
+{
+	$db->rollBack();
+	throw $e;
+}
+	
 
