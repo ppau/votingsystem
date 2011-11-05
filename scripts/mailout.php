@@ -78,7 +78,7 @@ foreach( $participants as $p )
 	$view->firstname = $p->firstname;
 	$view->surname = $p->surname;
 	$view->email = $p->email;
-	$view->link = $URL.'poll/'.$poll->id.'/#'.$privateKey->asString(16);
+	$view->link = $URL.'poll/'.$poll->id.'/#'.str_pad($privateKey->asString(16),64,"0",STR_PAD_LEFT);
 	
 	$mail = new Zend_Mail();
 	$mail->addTo($p->email,$p->firstname.' '.$p->surname);
