@@ -19,6 +19,18 @@ PPAUVote.init = function() {
 		return false;
 	});
 
+	// check for valid key
+	var key = window.location.href.split('#')[1];
+	if(!key || key.length < 64)
+	{
+		PPAUVote.error("You must ensure the URL in your location bar "
+			+ "includes a # followed by your 64 character private key. "
+			+ "You might need to copy and paste the key from your email "
+			+ "client if it has mucked up the URL. Be sure to refresh the "
+			+ "page after you have altered the URL.");
+		return;
+	}
+
 	// animate in the main content	
 	PPAUVote.finishLoading(function() {
 		$j('#content').slideDown(400);
