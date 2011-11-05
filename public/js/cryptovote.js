@@ -1,9 +1,9 @@
 // loading scheme:
-// 1. Client    10%
-// 2. Server    30%
-// 3. Client    40%
-// 4. Server    60%
-// 5. Client    70%
+// 1. Client    50%
+// 2. Server    60%
+// 3. Client    70%
+// 4. Server    80%
+// 5. Client    90%
 // 6. Server   100%
 
 //-----
@@ -64,7 +64,7 @@ CryptoVote.request = function()
 	var pk = $j.base64Encode( $j.toJSON( Q.asJSONObj() ) );
 	var uri = '/vote/request/req/' + encodeURIComponent(req) + '/sig/' + encodeURIComponent(sig) + '/pk/' + encodeURIComponent(pk);
 	
-	CryptoVote.updateProgress(10);
+	CryptoVote.updateProgress(50);
 	
 	$j.ajax( {
 		url: uri,
@@ -86,7 +86,7 @@ CryptoVote.request = function()
 // step two
 CryptoVote.sign = function(data, id, group, hash)
 {
-	CryptoVote.updateProgress(30);
+	CryptoVote.updateProgress(60);
 
 	var vote = $j.base64Encode( CryptoVote.data );
 	var tx = new Clipperz.Crypto.BigInt( data.key.x, 16 );
@@ -95,7 +95,7 @@ CryptoVote.sign = function(data, id, group, hash)
 	var blindness = Clipperz.Crypto.ECBlind.blindness( vote, Rcap, group, hash );
 	var blindSign = $j.base64Encode( $j.toJSON( { 'hcap': blindness.hcap.asString( 16 ), 'rcap': Rcap.asJSONObj() } ) );
 	
-	CryptoVote.updateProgress(40);
+	CryptoVote.updateProgress(70);
 	$j.ajax( {
 		url: '/vote/sign/req/' + encodeURIComponent(blindSign),
 		dataType: 'json',
@@ -116,7 +116,7 @@ CryptoVote.sign = function(data, id, group, hash)
 // step three
 CryptoVote.process = function(data, id, blindness, vote, Rcap, group, hash)
 {
-	CryptoVote.updateProgress(60);
+	CryptoVote.updateProgress(80);
 
 	var hcapOut = new Clipperz.Crypto.BigInt( data.hcap, 16 );
 	if( !hcapOut.equals( blindness.hcap ) )
@@ -129,7 +129,7 @@ CryptoVote.process = function(data, id, blindness, vote, Rcap, group, hash)
 	var s = Clipperz.Crypto.ECBlind.unblindness( scap, blindness.R, Rcap, vote, blindness.beta, group, hash );
 	var bsig = $j.base64Encode( $j.toJSON( { 's': s.asString( 16 ), 'R': blindness.R.asJSONObj() } ) );
 
-	CryptoVote.updateProgress(70);
+	CryptoVote.updateProgress(90);
 
 	$j.ajax( {
 		url: '/vote/process/id/' + id + '/data/' + vote + '/bsig/' + bsig,
