@@ -52,6 +52,7 @@ class VoteController extends Zend_Controller_Action
 			$questionIds[] = $question->id;
 		}
 
+		$this->view->headTitle($poll->name);
 		$this->view->poll = $poll;
 		$this->view->pollid = $poll->id;
 		$this->view->questions = $questions;	
