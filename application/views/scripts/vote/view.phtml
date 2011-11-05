@@ -50,7 +50,7 @@ $this->inlineScript()->captureEnd();
 // BEGIN MAIN PAGE
 ?>
 
-<div class="contentPane" id="loading">
+<div class="contentPane" id="loading" style="text-align:center">
 <p><img src="/image/loading.gif" alt="Loading..." /></p>
 <p><span id="progressBar"></span></p>
 <p>Loading...</p>
@@ -76,12 +76,20 @@ $this->inlineScript()->captureEnd();
 </form>
 </div>
 
-<div style="display:none" class="contentPane" id="error">
+<div style="display:none;text-align:center" class="contentPane" id="error">
 
 </div>
 
 <div style="display:none;text-align:center" class="contentPane" id="results">
 <p><b>Your vote has been cast successfully!</b></p>
 <p>Thank you for participating in the voting for Pirate Congress 2011. The results will be posted to the website and included in minutes which will be made available to all members.</p>
+</div>
+
+<div style="display:none">
+<!-- image preloaders -->
+<img src="/image/progressbg_green.gif" alt="" />
+<img src="/image/progressbg_orange.gif" alt="" />
+<img src="/image/progressbg_red.gif" alt="" />
+<img src="/image/progressbar.gif" alt="" />
 </div>
 
