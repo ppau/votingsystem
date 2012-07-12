@@ -1,6 +1,14 @@
 PPAU's amazingly confusing voting system
 ========================================
 
+Requirements
+------------
+
+*   PHP 5.2+ (Apache module + PHP CLI for scripts)
+*   ZendFramework `apt-get install zendframework`
+*   MySQL
+*   Working MTA
+
 Setup
 -----
 
