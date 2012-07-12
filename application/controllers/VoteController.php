@@ -42,6 +42,7 @@ class VoteController extends Zend_Controller_Action
 			throw new Exception("Invalid poll ID",404);
 		}
 	
+		/*
 		$questionsDb = new App_Model_DbTable_Questions();
 		$questions = $questionsDb->fetchQuestionsForPoll($pollId);
 
@@ -50,13 +51,13 @@ class VoteController extends Zend_Controller_Action
 		foreach($questions as $question)
 		{
 			$questionIds[] = $question->id;
-		}
+		}*/
 
 		$this->view->headTitle($poll->name);
 		$this->view->poll = $poll;
 		$this->view->pollid = $poll->id;
-		$this->view->questions = $questions;	
-		$this->view->questionIds = $questionIds;
+		/*$this->view->questions = $questions;	
+		$this->view->questionIds = $questionIds;*/
 	}
 
 	public function requestAction()

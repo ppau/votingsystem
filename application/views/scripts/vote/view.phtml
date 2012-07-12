@@ -60,15 +60,6 @@ $this->inlineScript()->captureEnd();
 
 <div style="display:none" class="contentPane" id="content">
 <form id="vote" onsubmit="return false">
-<?php /*
-<?php foreach($this->questions as $question): ?>
-	<h3><?php echo $question->question ?></h3>
-	<?php if(!empty($question->info)): ?>
-		<p><?php echo $question->info ?></p>
-	<?php endif ?>
-	<?php echo $this->partial('vote/form-'.$question->type.'.phtml',array('question' => $question)) ?>
-<?php endforeach ?>
-*/ ?>
 <?php echo $this->partial('vote/poll-'.$this->pollid.'.phtml') ?>
 <p>Warning: Once this form has been submitted your key will expire and you will not be able to make changes to your selections.</p>
 <input id="submit" type="submit" value="Submit" />
