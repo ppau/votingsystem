@@ -4,10 +4,12 @@ PPAU's amazingly confusing voting system
 Requirements
 ------------
 
+*   Apache 2
+*   mod_rewrite `a2enmod rewrite`
 *   PHP 5.2+ (Apache module + PHP CLI for scripts)
 *   ZendFramework `apt-get install zendframework`
 *   MySQL
-*   Working MTA
+*   Working MTA or sendmail
 
 Setup
 -----
@@ -18,7 +20,9 @@ Setup
     Leave the key fields as NULL - we'll generate those using script
 3.  Find the `pollid`  
     `SELECT id, name FROM polls;`
-4.  Set DB config in `application/configs/application.ini`
+4.  Set config in `application/configs/application.ini`
+    * Set DB config
+    * Set SMTP/MTA config or just use sendmail
 5.  Create keys for poll  
     `./scripts/make-poll-keys.php pollid`  
     pollid is the poll ID from step 3
