@@ -6,10 +6,7 @@ Setup
 
 1.  Import SQL from `ppauvote.sql`
 2.  Create poll in `polls` table:  
-      INSERT INTO polls (name, active) VALUES (
-        "Poll Name",
-        1
-      );
+    `INSERT INTO polls (name, active) VALUES ("Poll Name", 1);`  
     Leave the key fields as NULL - we'll generate those using script
 3.  Find the `pollid`  
     `SELECT id, name FROM polls;`
