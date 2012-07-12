@@ -7,9 +7,10 @@ Requirements
 *   Apache 2
 *   mod_rewrite `a2enmod rewrite`
 *   PHP 5.2+ (Apache module + PHP CLI for scripts)
+*   PHP gmp module `apt-get install php5-gmp`
 *   ZendFramework `apt-get install zendframework`
 *   MySQL
-*   Working MTA or sendmail
+*   Working MTA
 
 Setup
 -----
@@ -22,7 +23,7 @@ Setup
     `SELECT id, name FROM polls;`
 4.  Set config in `application/configs/application.ini`
     * Set DB config
-    * Set SMTP/MTA config or just use sendmail
+    * Set SMTP/MTA config
 5.  Create keys for poll  
     `./scripts/make-poll-keys.php pollid`  
     pollid is the poll ID from step 3
