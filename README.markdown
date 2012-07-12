@@ -49,6 +49,9 @@ Setup
 11. Clear all data  
     `./scripts/clear-all.php`  
 12. Empty the participants table and import the real participants
+    `TRUNCATE TABLE participants;`
+    __IMPORTANT__: you must delete all participant keys too  
+    `TRUNCATE TABLE participant_keys;`
 13. Perform real mailout  
     `./scripts/mailout.php pollid`  
     pollid is the poll ID from step 3
