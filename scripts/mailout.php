@@ -4,7 +4,7 @@
 // must have trailing slash
 $URL = 'http://vote.pirateparty.org.au/';
 
-require_once './init.php';
+require_once dirname(__FILE__).'/init.php';
 require_once 'Crypto/group.php';
 require_once 'Crypto/standardCurves.php';
 

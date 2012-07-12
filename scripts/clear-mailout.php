@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 
-require_once './init.php';
+require_once dirname(__FILE__).'/init.php';
 
 $db = new App_Model_DbTable_Participants();	
 $participants = $db->fetchNoKeys();

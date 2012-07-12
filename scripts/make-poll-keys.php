@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 
-require_once './init.php';
+require_once dirname(__FILE__).'/init.php';
 require_once 'Crypto/group.php';
 require_once 'Crypto/standardCurves.php';
 
